@@ -32,8 +32,3 @@ kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
 
 - [Navis](https://github.com/navis-org/navis)
 - [scikit-learn](https://github.com/scikit-learn/scikit-learn/)
-- `modern-package-template`_
-
-.. _Buildout: http://www.buildout.org/
-.. _Distribute: http://pypi.python.org/pypi/distribute
-.. _`modern-package-template`: http://pypi.python.org/pypi/modern-package-template
