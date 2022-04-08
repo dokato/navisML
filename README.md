@@ -1,21 +1,37 @@
-This file requires editing
-==========================
+navisML
+=======
 
-Note to the author: Please add something informative to this README *before*
-releasing your software, as `a little documentation goes a long way`_.  Both
-README.rst (this file) and NEWS.txt (release notes) will be included in your
-package metadata which gets displayed in the PyPI page for your project.
+`navisML` provides an easy interface between `navis` module for neurons analysis and `scikit-learn` for machine learning.
 
-You can take a look at the README.txt of other projects, such as repoze.bfg
-(http://bfg.repoze.org/trac/browser/trunk/README.txt) for some ideas.
+## Installation
 
-.. _`a little documentation goes a long way`: http://www.martinaspeli.net/articles/a-little-documentation-goes-a-long-way
+TODO
 
-Credits
--------
+## Example
 
-- `Distribute`_
-- `Buildout`_
+```python
+import navis
+from navisML.extractor import NeuralFeatures
+from sklearn.cluster import KMeans
+
+neurons = navis.read_swc("path/to/data.zip", read_meta=True)
+
+nfeats = NeuralFeatures({
+    'upstream' : 'upstream',
+    'downstream' : 'downstream',
+    'has_soma' : 'has_soma',    
+})
+
+X = nfeats.fit_transform(neurons)
+
+kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+
+```
+
+## References
+
+- [Navis](https://github.com/navis-org/navis)
+- [scikit-learn](https://github.com/scikit-learn/scikit-learn/)
 - `modern-package-template`_
 
 .. _Buildout: http://www.buildout.org/
