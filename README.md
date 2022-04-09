@@ -6,7 +6,7 @@ navisML
 ## Installation
 
 ```
-$ pip install git+https://github.com/navis-org/navis
+$ pip install git+https://github.com/dokato/navisML
 ```
 
 ## Example
