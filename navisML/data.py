@@ -11,10 +11,10 @@ def load_train():
     """
     Load example trainings Kenyon Cell neurons.
     """
-    print(data_path)
     neurons = navis.read_swc(os.path.join(data_path,
                                           "kc_train_swc_N.zip"),
-                             read_meta=True)
+                             read_meta=True,
+                             parallel=False)
     return neurons
 
 def load_test():
@@ -23,5 +23,6 @@ def load_test():
     """
     neurons = navis.read_swc(os.path.join(data_path,
                                           "kc_test_swc_N.zip"),
-                             read_meta=True)
+                             read_meta=True,
+                             parallel=False)
     return neurons

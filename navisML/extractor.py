@@ -45,8 +45,28 @@ def _is_numeric(dtype : np.typing.DTypeLike) -> bool:
 
 
 class NeuralFeatures(BaseEstimator, TransformerMixin):
+    """NeuralFeatures extractor
+
+    This let's you easily extract features from *navis* NeuronList
+    in a format readable by any scikit-learn pipeline. You may define features
+    as:
+      (a) string - a registered column in NeuronList;
+      (b) string - a neuron attribute;
+      (c) function - that takes a neuron and returns a numeric scalar.
+
+    Features can be passed as lists, or dictionary. If you use a list, you can define
+    custom feature *names*, but you don't have too.
+
+    All non-numeric features (string, bool) will be encoded to numeric with a
+    scikit-learn LabelEncoder.
+
+    Args:
+        features (Union[dict, list]): feature list or dictionary
+        names (_type_, optional): optional feature names (only for the list *features*). Defaults to None.
+    """
 
     def __init__(self, features : Union[dict, list], names = None):
+        "Init neural feautres extractor"
         self.features = features
         self._features_to_dict(names)
         self._feature_types = None
@@ -96,6 +116,7 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
         self._sweep_features_type()
 
     def _check_features_type(self, feature_name : str, feature : Any):
+        "Check if feature types are consistent (important for neuron attributes features)"
         if not feature_name in self._feature_types:
             self._feature_types[feature_name] = set([_get_dtype(feature)])
         else:
@@ -106,7 +127,10 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
                              f"{self._feature_types[feature_name]}"))
 
     def _sweep_features_type(self):
+        "Clean feature types after checking and create LabelEncoder for non-numeric ones."
         for feature_name in self._feature_types:
+            # at this point it should pass _check_features_type, so we can assume that
+            # all types are the same, thus take first feature type from the list/set
             self._feature_types[feature_name] = _is_numeric(list(self._feature_types[feature_name])[0])
             if not self._feature_types[feature_name]:
                 self._feature_encoders[feature_name] = LabelEncoder()
@@ -130,7 +154,8 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
                 Xenc[feature_name] = self._feature_encoders[feature_name].fit_transform(X[feature_name])
         return Xenc
 
-    def decode_feature(self, feature_name : str, values : np.typing.ArrayLike) -> np.typing.ArrayLike:
+    def decode_feature(self, feature_name : str,
+                       values : np.typing.ArrayLike) -> np.typing.ArrayLike:
         """Decode numeric features.
 
         Args:
@@ -150,7 +175,8 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
         else:
             self._feature_encoders.transform(values)
 
-    def _extract_features(self, neurons : navis.NeuronList, encode : bool = True) -> pd.DataFrame:
+    def _extract_features(self, neurons : navis.NeuronList,
+                          encode : bool = True) -> pd.DataFrame:
         """Extract features
 
         Args:

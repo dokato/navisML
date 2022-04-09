@@ -5,7 +5,9 @@ navisML
 
 ## Installation
 
-TODO
+```
+$ pip install git+https://github.com/navis-org/navis
+```
 
 ## Example
 
@@ -19,7 +21,8 @@ neurons = navis.read_swc("path/to/data.zip", read_meta=True)
 nfeats = NeuralFeatures({
     'upstream' : 'upstream',
     'downstream' : 'downstream',
-    'has_soma' : 'has_soma',    
+    'has_soma' : 'has_soma',
+    'custom_feature' : custom_function
 })
 
 X = nfeats.fit_transform(neurons)
