@@ -191,9 +191,9 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
         for en, nrn in enumerate(neurons):
             for ef, feat_name in enumerate(self.features):
                 if isinstance(self.features[feat_name], str):
-                        X[en, ef] = getattr(nrn, self.features[feat_name])
+                    X[en, ef] = getattr(nrn, self.features[feat_name])
                 elif callable(self.features[feat_name]):
-                        X[en, ef] = self.features[feat_name](nrn)
+                    X[en, ef] = self.features[feat_name](nrn)
                 _verify_feature_value(X[en, ef], feat_name)
         X = pd.DataFrame(X)
         X.columns = list(self.features.keys())
@@ -216,7 +216,7 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
         self.names = list(self.features.keys())
         return self
 
-    def transform(self, neurons : navis.NeuronList):
+    def transform(self, neurons : navis.NeuronList) -> pd.DataFrame:
         """Extract features
 
         Args:
@@ -230,7 +230,7 @@ class NeuralFeatures(BaseEstimator, TransformerMixin):
             self.fit(neurons)
         return self._extract_features(neurons)
 
-    def fit_transform(self, neurons : navis.NeuronList):
+    def fit_transform(self, neurons : navis.NeuronList) -> pd.DataFrame:
         """Fit feature extractor and extract features.
 
         Args:
