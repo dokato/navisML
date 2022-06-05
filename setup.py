@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 import sys, os
+from glob import glob
 from collections import defaultdict
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -43,6 +44,9 @@ setup(name='navisML',
       'Intended Audience :: Science/Research',
       'Topic :: Scientific/Engineering :: Bio-Informatics',
       'Topic :: Scientific/Engineering :: Artificial Intelligence'
+    ],
+    data_files = [
+        ('data', glob('navisML/data/*.zip'))
     ],
     keywords='navis neurons ml machine-learning neuroscience',
     author='dokato',
