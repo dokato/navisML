@@ -18,14 +18,14 @@ from sklearn.cluster import KMeans
 
 neurons = navis.read_swc("path/to/data.zip", read_meta=True)
 
-nfeats = NeuralFeatures({
+nrnfeats = NeuralFeatures({
     'upstream' : 'upstream',
     'downstream' : 'downstream',
     'has_soma' : 'has_soma',
     'custom_feature' : custom_function
 })
 
-X = nfeats.fit_transform(neurons)
+X = nrnfeats.fit_transform(neurons)
 
 kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
 
