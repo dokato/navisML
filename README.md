@@ -2,6 +2,7 @@ navisML
 =======
 
 `navisML` provides an easy interface between `navis` module for neurons analysis and `scikit-learn` for machine learning.
+For every neuron object (mesh and skeleton) from a neuronlist it enables you to extract scalar information to use as a feature in a ML modelling.
 
 ## Installation
 
